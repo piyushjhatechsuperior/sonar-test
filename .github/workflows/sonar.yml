@@ -30,14 +30,14 @@
 
 
 
-# Second Version (it has the warning but in SnarCloude setup, but it completes the step)
-name: SonarCloud Analysis
+# # Second Version (it has the warning but in SnarCloude setup, but it completes the step)
+# name: SonarCloud Analysis
 
-on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main ]
+# on:
+#   push:
+#     branches: [ main, develop ]
+#   pull_request:
+#     branches: [ main ]
 
 # jobs:
 #   sonarcloud:
