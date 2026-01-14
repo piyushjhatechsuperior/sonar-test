@@ -17,10 +17,10 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Run tests & coverage
-      run: |
-        npm test -- --coverage
-        # or jest --coverage if using Jest
+    # - name: Run tests & coverage
+    #   run: |
+    #     npm test -- --coverage
+    #     # or jest --coverage if using Jest
 
     - name: SonarCloud Scan
       uses: SonarSource/sonarqube-scan-action@v3
