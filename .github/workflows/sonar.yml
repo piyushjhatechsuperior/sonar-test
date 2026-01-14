@@ -2,9 +2,9 @@ name: SonarCloud Analysis
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, develop ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
 
 jobs:
   sonarcloud:
@@ -17,19 +17,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install and Build
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests & coverage
         run: |
-          npm ci
-          npm run build
+          npm test -- --coverage
+        continue-on-error: true
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v4
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.projectKey=piyushjhatechsuperior_sonar-test
-            -Dsonar.organization=piyushjhatechsuperior
-            -Dsonar.host.url=https://sonarcloud.io
-            -Dsonar.sources=.
-            -Dsonar.exclusions=node_modules/**,dist/**,build/**,.next/**,coverage/**,**/*.test.*,**/*.spec.*,**/*.stories.*,**/tests/**,**/__tests__/**,*.config.js,**/*.md,**/*.json
