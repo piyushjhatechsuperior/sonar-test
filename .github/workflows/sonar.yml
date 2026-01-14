@@ -1,26 +1,45 @@
 name: SonarCloud Analysis
+
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
 
 jobs:
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
     
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Required for SonarCloud full history analysis
+      
     - name: Install and Build
       run: |
+        # Add your build commands here
         npm ci
-        npm run build
-    
+        npm run build  # or your build command
+      
     - name: SonarCloud Scan
-      uses: SonarSource/sonarqube-scan-action@v4
+      uses: SonarSource/sonarqube-scan-action@v6
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      with:
+        args: >
+          -Dsonar.projectKey=piyushjhatechsuperior_sonar-test
+          -Dsonar.organization=piyushjhatechsuperiors
+          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
+          -Dsonar.sources=.
+          # -Dsonar.exclusions=node_modules/**,dist/**,build/**
+          -Dsonar.exclusions=node_modules/**,dist/**,build/**,.next/**,coverage/**,**/*.test.*,**/*.spec.*,**/*.stories.*,**/tests/**,**/__tests__/**,*.config.js,**/*.md,**/*.json
+    
+    - name: Post SonarCloud Scan
+      if: always()
+      uses: SonarSource/sonarqube-scan-action@v6
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
