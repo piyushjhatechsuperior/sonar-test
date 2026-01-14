@@ -31,7 +31,7 @@ jobs:
       with:
         args: >
           -Dsonar.projectKey=piyushjhatechsuperior_sonar-test
-          -Dsonar.organization=piyushjhatechsuperiors
+          -Dsonar.organization=piyushjhatechsuperior
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
           -Dsonar.sources=.
           # -Dsonar.exclusions=node_modules/**,dist/**,build/**
