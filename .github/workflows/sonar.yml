@@ -28,8 +28,6 @@
 #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 #         SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
 
-
-
 # # Second Version (it has the warning but in SnarCloude setup, but it completes the step)
 # name: SonarCloud Analysis
 
@@ -70,7 +68,6 @@
 #             -Dsonar.sources=.
 #             -Dsonar.exclusions=node_modules/**,dist/**,build/**,.next/**,coverage/**
 
-
 name: SonarCloud Analysis
 
 on:
@@ -92,4 +89,3 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@v4
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
